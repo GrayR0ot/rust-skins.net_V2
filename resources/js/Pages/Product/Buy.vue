@@ -39,14 +39,14 @@
                                             <div class="flex items-center justify-between">
                                                 <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                                                 <div>
-                                                    <select
+                                                    <select v-model="currentOrder" @change="onChangeOrder()"
                                                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                                        <option>Latest</option>
-                                                        <option>Last Week</option>
+                                                        <option value="orderByNew">Latest</option>
+                                                        <option value="orderByLast">Oldest</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="mt-6" v-for="(comment, index) in comments.slice(0, 5)"
+                                            <div class="mt-6" v-for="(comment, index) in comments"
                                                  v-bind:key="comment.id">
                                                 <div class="max-w-4xl px-10 py-6 bg-white rounded-lg shadow-md">
                                                     <div class="flex justify-between items-center"><span
@@ -123,13 +123,26 @@
             formatDate(date) {
                 momentTz.tz.setDefault('Europe/Paris');
                 return moment(date).format('DD/MM/YYYY HH:mm');
-            }
+            },
+            submit() {
+                var data = new FormData();
+                data.append('comment', this.form.comment);
+                data.append('product_id', this.product.id);
+                this.$inertia.post('/product/comment', data);
+                this.form.comment = "";
+                swal("Success!", "You successfully post your comment to the product.", "success");
+            },
+            onChangeOrder() {
+                console.log("1");
+                this.comments.reverse();
+            },
         },
         data() {
             return {
                 form: {
                     comment: null,
                 },
+                currentOrder: 'orderByNew',
             }
         },
     }

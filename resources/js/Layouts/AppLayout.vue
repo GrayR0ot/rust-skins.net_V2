@@ -20,20 +20,22 @@
                                 <jet-nav-link :href="route('home')" :active="route().current('home')">
                                     Home
                                 </jet-nav-link>
-                                    <jet-nav-link v-if="$page.props.user != null" :href="route('dashboard')" :active="route().current('dashboard')">
-                                        Dashboard
-                                    </jet-nav-link>
-                                    <jet-nav-link v-if="$page.props.user != null" :href="route('users.index')" :active="route().current('users.index')">
-                                        Users
-                                    </jet-nav-link>
-                                    <jet-nav-link v-if="$page.props.user != null" :href="route('products.index')"
-                                                  :active="route().current('products.index')">
-                                        Products
-                                    </jet-nav-link>
-                                    <jet-nav-link v-if="$page.props.user != null" :href="route('orders.index')"
-                                                  :active="route().current('orders.index')">
-                                        Orders
-                                    </jet-nav-link>
+                                <jet-nav-link v-if="$page.props.user != null" :href="route('dashboard')"
+                                              :active="route().current('dashboard')">
+                                    Dashboard
+                                </jet-nav-link>
+                                <jet-nav-link v-if="$page.props.user != null" :href="route('users.index')"
+                                              :active="route().current('users.index')">
+                                    Users
+                                </jet-nav-link>
+                                <jet-nav-link v-if="$page.props.user != null" :href="route('products.index')"
+                                              :active="route().current('products.index')">
+                                    Products
+                                </jet-nav-link>
+                                <jet-nav-link v-if="$page.props.user != null" :href="route('orders.index')"
+                                              :active="route().current('orders.index')">
+                                    Orders
+                                </jet-nav-link>
                                 <jet-nav-link :href="route('policy.show')" :active="route().current('policy.show')">
                                     Privacy Policy
                                 </jet-nav-link>
@@ -118,7 +120,8 @@
                                             <img class="h-8 w-8 rounded-full object-cover"
                                                  :src="$page.props.user.profile_photo_url"
                                                  :alt="$page.props.user.name"/>
-                                            <a class="mt-auto mb-auto ml-1 mr-2 text-pink-300">{{ $page.props.user.name }}</a>
+                                            <a class="mt-auto mb-auto ml-1 mr-2 text-pink-300">{{ $page.props.user.name
+                                                }}</a>
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">

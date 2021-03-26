@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Invoice;
 
 class OrderController extends Controller
 {
@@ -54,5 +57,16 @@ class OrderController extends Controller
     public function delete(Request $request) {
         $order = Order::find($request->input('orderId'));
         $order->delete();
+    }
+
+    public function invoice($id) {
+        $order = Order::where('id', $id)->with('user')->with('product')->first();
+        $customer = new Buyer([
+            'name' => $order->user->name,
+            'email' => $order->user->email,
+        ]);
+        $product = (new InvoiceItem())->title($order->product->name)->pricePerUnit($order->product->price)->discountByPercent($order->product->discount);
+        $invoice = Invoice::make()->series('EU')->sequence($order->id)->buyer($customer)->taxRate(20)->addItem($product)->filename($order->user->name . "_" . $order->id)->logo("https://dev.grayroot.eu/logo.png");
+        return $invoice->stream();
     }
 }

@@ -43,6 +43,12 @@
                                             order
                                         </button>
                                     </div>
+                                    <div class="text-xl">
+                                        <button
+                                            class="bg-pink-400 text-bg-gray-200 px-2 py-1 text-sm mt-3 inline-block rounded hover:bg-pink-500"
+                                            @click="getInvoice()">Invoice
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <order-progress-bar :status="order.status"></order-progress-bar>
@@ -92,6 +98,9 @@
                         console.log(response);
                     });
                 this.$inertia.visit("/orders");
+            },
+            getInvoice() {
+                window.open("/order/invoice/" + this.order.id, "_blank");
             }
         }
     }

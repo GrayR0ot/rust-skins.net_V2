@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     public function buy($id) {
         $product = Product::where('id', $id)->with('comments')->first();
-        $comments = ProductComment::where('product_id', $id)->with('user')->get();
+        $comments = ProductComment::where('product_id', $id)->with('user')->orderBy('id', 'DESC')->limit(5)->get();
         return Inertia::render('Product/Buy', [
             'product' => $product,
             'comments' => $comments,
@@ -47,6 +47,6 @@ class ProductController extends Controller
 
     public function comment(Request $request) {
         ProductComment::create($request->all());
-        return \redirect('/product/' . $request->input('product_id'));
+        return \redirect('/product/buy/' . $request->input('product_id'));
     }
 }
